@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --w-green: #25D366;
+    --w-dark-green: #128C7E;
+    --bg: #121212;
+    --card: #1e1e1e;
+    --card-hover: #262626;
+    --text: #e0e0e0;
+    --gray: #a0a0a0;
+    --border: #2d2d2d;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    overflow-x: hidden;
+  }
+}
+
+/* Custom animations */
+@keyframes hero-pulse {
+  0% { opacity: 0.7; transform: translateX(-50%) scale(1); }
+  100% { opacity: 1; transform: translateX(-50%) scale(1.12); }
+}
+
+@keyframes slide-stats {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+@keyframes adult-toggle-pulse {
+  0%, 100% { box-shadow: 0 0 0 1px rgba(255,92,92,0.22), 0 10px 28px rgba(220,20,42,0.34), 0 0 16px rgba(255,64,72,0.18); }
+  50% { box-shadow: 0 0 0 1px rgba(255,92,92,0.38), 0 12px 32px rgba(220,20,42,0.44), 0 0 26px rgba(255,64,72,0.32); }
+}
+
+.animate-hero-pulse {
+  animation: hero-pulse 6s ease-in-out infinite alternate;
+}
+
+.animate-slide-stats {
+  animation: slide-stats 35s linear infinite;
+}
+
+.animate-slide-stats:hover {
+  animation-play-state: paused;
+}
+
+.animate-blink {
+  animation: blink 1.8s infinite;
+}
+
+.animate-adult-pulse {
+  animation: adult-toggle-pulse 1.9s ease-in-out infinite;
+}
+
+/* Hide scrollbar for tabs and horizontal carousels */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

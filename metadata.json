@@ -1,0 +1,6 @@
+{
+  "name": "GroupHub - WhatsApp Group Directory",
+  "description": "Discover active public WhatsApp groups by category, country, city, topic, and keyword on GroupHub. Browse verified community listings.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
