@@ -1,11 +1,10 @@
 import React from 'react';
-import { ShieldCheck, Eye, AlertCircle, ArrowUp, MessageCircle } from 'lucide-react';
-import { useAdmin } from '../context/AdminContext.tsx';
+import { ShieldCheck, Eye, AlertCircle, ArrowUp } from 'lucide-react';
 
 interface FooterProps {
   onNavigateSection: (sectionId: string) => void;
   onOpenAddGroup: () => void;
-  onOpenReport?: () => void;
+  onOpenReport: () => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({
@@ -13,150 +12,138 @@ export const Footer: React.FC<FooterProps> = ({
   onOpenAddGroup,
   onOpenReport
 }) => {
-  const { appearance, setViewMode } = useAdmin();
-  const brandName = appearance?.siteName || 'GroupHub';
-  const primaryColor = appearance?.primaryColor || '#25D366';
-
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
-    <footer className="border-t border-gray-200 bg-gray-50 pt-16 pb-10 text-gray-600">
-      <div className="max-w-[1240px] mx-auto px-4 sm:px-6">
+    <footer className="border-t border-white/10 bg-[#0d0d0d] pt-14 pb-8 text-gray-400">
+      <div className="max-w-[1200px] mx-auto px-4">
         
         {/* Top Grid */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
           
-          {/* Brand Column */}
+          {/* Brand Col */}
           <div className="md:col-span-1 space-y-4">
-            <div className="flex items-center gap-2">
-              <div 
-                className="w-8 h-8 rounded-xl flex items-center justify-center font-black text-black shadow-xs"
-                style={{ backgroundColor: primaryColor }}
-              >
-                <MessageCircle className="w-4 h-4 text-black fill-black/20" />
-              </div>
-              <span className="text-2xl font-black text-gray-950 tracking-tight">
-                {brandName}<span style={{ color: primaryColor }}>.</span>
-              </span>
+            <div className="text-2xl font-black text-white tracking-tight">
+              Groupizo<span className="text-[#25D366]">.</span>
             </div>
             
-            <p className="text-xs text-gray-600 leading-relaxed">
-              A curated community directory for discovering active public WhatsApp groups.
-              Browse verified links across categories, countries, and regional cities.
+            <p className="text-xs text-gray-400 leading-relaxed">
+              A reviewed directory for public WhatsApp group invite listings. Every submission is checked before publishing. Invite status is monitored and updated when changes are detected.
             </p>
 
-            <div className="text-xs text-gray-700">
-              <strong className="text-gray-950">Support &amp; Inquiries:</strong><br />
-              <a href="mailto:contact@grouphub.community" className="text-[#128C7E] hover:underline font-medium">
-                contact@grouphub.community
+            <div className="text-xs text-gray-300">
+              <strong className="text-white">Support:</strong>{' '}
+              <a href="mailto:hello@groupizo.com" className="text-[#25D366] hover:underline">
+                hello@groupizo.com
               </a>
             </div>
 
             {/* Trust Badges */}
-            <div className="flex flex-wrap gap-2 pt-1">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-gray-200 text-[11px] font-semibold text-gray-700 shadow-2xs">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#25D366]" /> Verified Links
+            <div className="flex flex-wrap gap-2 pt-2">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] font-semibold text-gray-300">
+                <ShieldCheck className="w-3.5 h-3.5 text-[#25D366]" /> Reviewed Listings
               </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-gray-200 text-[11px] font-semibold text-gray-700 shadow-2xs">
-                <Eye className="w-3.5 h-3.5 text-[#25D366]" /> Health Monitored
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] font-semibold text-gray-300">
+                <Eye className="w-3.5 h-3.5 text-[#25D366]" /> Status Monitored
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] font-semibold text-gray-300">
+                <AlertCircle className="w-3.5 h-3.5 text-[#25D366]" /> Report Supported
               </span>
             </div>
           </div>
 
           {/* Directory Links */}
           <div className="space-y-3">
-            <h4 className="text-xs font-black text-gray-900 tracking-wider uppercase">Explore Groups</h4>
-            <ul className="space-y-2 text-xs font-medium">
+            <h4 className="text-sm font-extrabold text-white tracking-wider uppercase">Explore</h4>
+            <ul className="space-y-2 text-xs">
               <li>
-                <button onClick={() => onNavigateSection('group-grid-section')} className="hover:text-[#128C7E] transition-colors cursor-pointer">
-                  All WhatsApp Groups
+                <button onClick={() => onNavigateSection('hero')} className="hover:text-[#25D366] transition-colors cursor-pointer">
+                  Home Directory
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigateSection('browse-categories')} className="hover:text-[#128C7E] transition-colors cursor-pointer">
-                  Directory Categories
+                <button onClick={() => onNavigateSection('browse-categories')} className="hover:text-[#25D366] transition-colors cursor-pointer">
+                  All Categories
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigateSection('browse-countries')} className="hover:text-[#128C7E] transition-colors cursor-pointer">
-                  Country Hubs
+                <button onClick={() => onNavigateSection('browse-countries')} className="hover:text-[#25D366] transition-colors cursor-pointer">
+                  All Countries
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigateSection('browse-cities')} className="hover:text-[#128C7E] transition-colors cursor-pointer">
-                  Metropolitan Cities
+                <button onClick={() => onNavigateSection('browse-cities')} className="hover:text-[#25D366] transition-colors cursor-pointer">
+                  Local Communities
                 </button>
               </li>
               <li>
-                <button onClick={onOpenAddGroup} className="text-[#128C7E] font-bold hover:underline cursor-pointer">
-                  + Submit Your Group
-                </button>
-              </li>
-            </ul>
-          </div>
-
-          {/* Community & Safety */}
-          <div className="space-y-3">
-            <h4 className="text-xs font-black text-gray-900 tracking-wider uppercase">Community &amp; Trust</h4>
-            <ul className="space-y-2 text-xs font-medium">
-              <li>
-                <button onClick={() => onNavigateSection('how-it-works')} className="hover:text-[#128C7E] transition-colors cursor-pointer">
-                  How GroupHub Works
-                </button>
-              </li>
-              <li>
-                <button onClick={() => onNavigateSection('guides')} className="hover:text-[#128C7E] transition-colors cursor-pointer">
-                  Guides &amp; WhatsApp Tips
-                </button>
-              </li>
-              <li>
-                <button onClick={() => onNavigateSection('faq')} className="hover:text-[#128C7E] transition-colors cursor-pointer">
-                  Frequently Asked Questions
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => setViewMode('admin')} 
-                  className="text-gray-900 font-bold hover:text-[#128C7E] transition-colors cursor-pointer flex items-center gap-1"
-                >
-                  <span>Admin Console</span> &rsaquo;
+                <button onClick={onOpenAddGroup} className="text-[#25D366] font-bold hover:underline cursor-pointer">
+                  + Submit a Group
                 </button>
               </li>
             </ul>
           </div>
 
-          {/* Legal Disclosures */}
+          {/* About & Trust */}
           <div className="space-y-3">
-            <h4 className="text-xs font-black text-gray-900 tracking-wider uppercase">Legal &amp; Policy</h4>
-            <ul className="space-y-2 text-xs font-medium text-gray-500">
-              <li>Terms of Service</li>
-              <li>Privacy Policy</li>
-              <li>Community Guidelines</li>
-              <li>DMCA Copyright Notice</li>
-              <li>Independent Platform Disclaimer</li>
+            <h4 className="text-sm font-extrabold text-white tracking-wider uppercase">About &amp; Trust</h4>
+            <ul className="space-y-2 text-xs">
+              <li>
+                <button onClick={() => onNavigateSection('leaderboard')} className="hover:text-[#25D366] transition-colors cursor-pointer">
+                  Top Contributors Podium
+                </button>
+              </li>
+              <li>
+                <button onClick={() => onNavigateSection('guides')} className="hover:text-[#25D366] transition-colors cursor-pointer">
+                  Safety &amp; Guides
+                </button>
+              </li>
+              <li>
+                <button onClick={() => onNavigateSection('faq')} className="hover:text-[#25D366] transition-colors cursor-pointer">
+                  Editorial &amp; Review Policy
+                </button>
+              </li>
+              <li>
+                <button onClick={onOpenReport} className="text-red-400 hover:text-red-300 transition-colors cursor-pointer">
+                  Report Broken Link / Spam
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          {/* Legal Cluster */}
+          <div className="space-y-3">
+            <h4 className="text-sm font-extrabold text-white tracking-wider uppercase">Legal &amp; Policy</h4>
+            <ul className="space-y-2 text-xs">
+              <li><span className="hover:text-white cursor-pointer">Terms of Service</span></li>
+              <li><span className="hover:text-white cursor-pointer">Privacy Policy</span></li>
+              <li><span className="hover:text-white cursor-pointer">Cookies Policy</span></li>
+              <li><span className="hover:text-white cursor-pointer">Disclaimer</span></li>
+              <li><span className="hover:text-white cursor-pointer">DMCA Notice</span></li>
             </ul>
           </div>
 
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-gray-200/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-500">
+        <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
           <div>
-            &copy; {new Date().getFullYear()} {brandName}. All rights reserved.{' '}
-            <span className="text-gray-400 block sm:inline mt-1 sm:mt-0">
-              Independent curation platform. Not affiliated with WhatsApp Inc. or Meta Platforms, Inc.
+            &copy; 2026 Groupizo. All rights reserved.{' '}
+            <span className="text-gray-500 block sm:inline mt-1 sm:mt-0">
+              Independent curation platform. Not affiliated with WhatsApp Inc. or Meta.
             </span>
           </div>
 
           <div className="flex items-center gap-3">
             <button
               onClick={scrollToTop}
-              className="px-3 py-1.5 rounded-lg bg-white hover:bg-gray-100 text-gray-700 border border-gray-200 cursor-pointer transition-colors flex items-center gap-1.5 text-xs font-semibold shadow-2xs"
+              className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white cursor-pointer transition-colors flex items-center gap-1.5"
+              title="Back to top"
             >
               <span>Back to top</span>
-              <ArrowUp className="w-3.5 h-3.5 text-[#128C7E]" />
+              <ArrowUp className="w-3.5 h-3.5" />
             </button>
           </div>
         </div>

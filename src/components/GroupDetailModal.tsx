@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Group } from '../types.ts';
 import { X, ExternalLink, Copy, Check, ShieldCheck, AlertCircle, Users, Globe, MapPin, Tag, QrCode } from 'lucide-react';
-import { useAdmin } from '../context/AdminContext.tsx';
 
 interface GroupDetailModalProps {
   group: Group | null;
@@ -16,8 +15,6 @@ export const GroupDetailModal: React.FC<GroupDetailModalProps> = ({
 }) => {
   const [copied, setCopied] = useState(false);
   const [showQr, setShowQr] = useState(false);
-  const { appearance } = useAdmin();
-  const primaryColor = appearance?.primaryColor || '#25D366';
 
   if (!group) return null;
 
@@ -34,22 +31,22 @@ export const GroupDetailModal: React.FC<GroupDetailModalProps> = ({
   const memberPct = Math.round((group.membersCount / (group.maxMembers || 1024)) * 100);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-xs animate-fadeIn">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fadeIn">
       <div 
-        className="bg-white border border-gray-200 rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto relative shadow-2xl overflow-hidden flex flex-col"
+        className="bg-[#181818] border border-white/15 rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto relative shadow-2xl overflow-hidden flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
         <button
           onClick={onClose}
           aria-label="Close modal"
-          className="absolute top-3.5 right-3.5 z-20 p-2 text-white bg-black/60 hover:bg-black rounded-full cursor-pointer transition-colors"
+          className="absolute top-3 right-3 z-20 p-2 text-white bg-black/60 hover:bg-black rounded-full cursor-pointer transition-colors"
         >
           <X className="w-5 h-5" />
         </button>
 
-        {/* Top Cover Banner */}
-        <div className="relative h-48 w-full bg-gray-900">
+        {/* Top Cover */}
+        <div className="relative h-44 sm:h-48 w-full bg-[#111]">
           <img
             src={group.image}
             alt={group.title}
@@ -58,60 +55,57 @@ export const GroupDetailModal: React.FC<GroupDetailModalProps> = ({
               (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1614680376593-902f749f7ffc?w=600&auto=format&fit=crop&q=80';
             }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#181818] via-transparent to-black/40" />
 
           {/* Verification Badge */}
           {group.isVerified && (
-            <span className="absolute top-4 left-4 bg-[#128C7E] text-white font-extrabold text-xs px-3 py-1 rounded-full flex items-center gap-1 shadow-md">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#25D366]" /> Verified Link
+            <span className="absolute top-4 left-4 bg-[#25D366] text-black font-black text-xs px-2.5 py-1 rounded-full flex items-center gap-1 shadow-md">
+              <ShieldCheck className="w-3.5 h-3.5" /> Checked &amp; Verified
             </span>
           )}
-
-          {/* Category Badge */}
-          <span className="absolute bottom-3 left-4 text-xs font-black uppercase tracking-wider bg-black/80 text-[#25D366] px-2.5 py-0.5 rounded-md border border-[#25D366]/40">
-            {group.category}
-          </span>
         </div>
 
         {/* Modal Content */}
-        <div className="p-6 flex-1 flex flex-col bg-white">
+        <div className="p-6 flex-1 flex flex-col -mt-4 relative z-10">
           
           {/* Group Title */}
-          <h2 className="text-xl sm:text-2xl font-black text-gray-950 mb-2 leading-snug">
+          <h2 className="text-xl sm:text-2xl font-black text-white mb-2 leading-snug">
             {group.title}
           </h2>
 
           {/* Meta Pills */}
-          <div className="flex flex-wrap gap-2 text-xs text-gray-600 mb-5">
-            <span className="inline-flex items-center gap-1.5 bg-gray-100 px-3 py-1 rounded-full font-semibold">
-              <Globe className="w-3.5 h-3.5 text-[#128C7E]" /> {group.country}
+          <div className="flex flex-wrap gap-2 text-xs text-gray-300 mb-5">
+            <span className="inline-flex items-center gap-1 bg-white/5 border border-white/10 px-2.5 py-1 rounded-full">
+              <Globe className="w-3.5 h-3.5 text-[#25D366]" /> {group.country}
             </span>
             {group.city && (
-              <span className="inline-flex items-center gap-1.5 bg-gray-100 px-3 py-1 rounded-full font-semibold">
-                <MapPin className="w-3.5 h-3.5 text-[#128C7E]" /> {group.city}
+              <span className="inline-flex items-center gap-1 bg-white/5 border border-white/10 px-2.5 py-1 rounded-full">
+                <MapPin className="w-3.5 h-3.5 text-[#25D366]" /> {group.city}
               </span>
             )}
-            <span className="inline-flex items-center gap-1.5 bg-gray-100 px-3 py-1 rounded-full font-semibold">
-              <Tag className="w-3.5 h-3.5 text-[#128C7E]" /> {group.category}
+            <span className="inline-flex items-center gap-1 bg-white/5 border border-white/10 px-2.5 py-1 rounded-full">
+              <Tag className="w-3.5 h-3.5 text-[#25D366]" /> {group.category}
             </span>
           </div>
 
           {/* Description */}
-          <div className="bg-gray-50 border border-gray-200/80 rounded-2xl p-4 text-xs sm:text-sm text-gray-700 leading-relaxed mb-5">
-            {group.description || 'Verified WhatsApp community group. Friendly discussion, announcements and updates.'}
-          </div>
+          {group.description && (
+            <div className="bg-white/[0.03] border border-white/5 rounded-xl p-3.5 text-xs sm:text-sm text-gray-300 leading-relaxed mb-5">
+              {group.description}
+            </div>
+          )}
 
-          {/* Member Capacity Indicator */}
+          {/* Member capacity indicator */}
           <div className="mb-5">
-            <div className="flex items-center justify-between text-xs text-gray-600 mb-1.5">
-              <span className="flex items-center gap-1 font-semibold">
-                <Users className="w-3.5 h-3.5 text-gray-500" /> Member Capacity
+            <div className="flex items-center justify-between text-xs text-gray-400 mb-1.5">
+              <span className="flex items-center gap-1">
+                <Users className="w-3.5 h-3.5 text-gray-400" /> Member Capacity
               </span>
-              <span className="font-bold text-gray-900">
+              <span className="font-bold text-white">
                 {group.membersCount} / {group.maxMembers || 1024} members ({memberPct}%)
               </span>
             </div>
-            <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+            <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
               <div 
                 className="h-full bg-gradient-to-r from-emerald-500 to-[#25D366] rounded-full"
                 style={{ width: `${Math.min(100, memberPct)}%` }}
@@ -125,7 +119,7 @@ export const GroupDetailModal: React.FC<GroupDetailModalProps> = ({
               {group.tags.map((tag, idx) => (
                 <span 
                   key={idx}
-                  className="text-[11px] font-semibold text-[#128C7E] bg-emerald-50 border border-emerald-200/80 px-2.5 py-0.5 rounded-full"
+                  className="text-[11px] font-semibold text-[#25D366] bg-[#25D366]/10 border border-[#25D366]/20 px-2 py-0.5 rounded-full"
                 >
                   #{tag}
                 </span>
@@ -133,12 +127,11 @@ export const GroupDetailModal: React.FC<GroupDetailModalProps> = ({
             </div>
           )}
 
-          {/* Action Buttons */}
+          {/* Primary Action Buttons */}
           <div className="space-y-3 mt-auto">
             <button
               onClick={handleJoin}
-              className="w-full py-3.5 px-4 rounded-xl text-black font-black text-sm flex items-center justify-center gap-2 shadow-md transition-all hover:brightness-105 active:scale-95 cursor-pointer"
-              style={{ backgroundColor: primaryColor }}
+              className="w-full py-3.5 px-4 rounded-xl bg-[#25D366] hover:bg-[#1ebe5a] text-black font-black text-sm flex items-center justify-center gap-2 shadow-lg shadow-[#25D366]/20 transition-all hover:scale-[1.01] cursor-pointer"
             >
               <span>Join WhatsApp Group</span>
               <ExternalLink className="w-4 h-4 stroke-[2.5]" />
@@ -147,12 +140,12 @@ export const GroupDetailModal: React.FC<GroupDetailModalProps> = ({
             <div className="flex items-center gap-2">
               <button
                 onClick={handleCopy}
-                className="flex-1 py-2.5 px-3 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold text-xs flex items-center justify-center gap-2 border border-gray-200 transition-colors cursor-pointer"
+                className="flex-1 py-2.5 px-3 rounded-xl bg-white/10 hover:bg-white/15 text-white font-bold text-xs flex items-center justify-center gap-2 border border-white/10 transition-colors cursor-pointer"
               >
                 {copied ? (
                   <>
-                    <Check className="w-4 h-4 text-emerald-600" />
-                    <span className="text-emerald-700">Invite Link Copied!</span>
+                    <Check className="w-4 h-4 text-[#25D366]" />
+                    <span className="text-[#25D366]">Link Copied!</span>
                   </>
                 ) : (
                   <>
@@ -164,29 +157,29 @@ export const GroupDetailModal: React.FC<GroupDetailModalProps> = ({
 
               <button
                 onClick={() => setShowQr(!showQr)}
-                className="py-2.5 px-3.5 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold text-xs flex items-center justify-center gap-1.5 border border-gray-200 transition-colors cursor-pointer"
+                className="py-2.5 px-3 rounded-xl bg-white/10 hover:bg-white/15 text-white font-bold text-xs flex items-center justify-center gap-1.5 border border-white/10 transition-colors cursor-pointer"
                 title="View QR Code"
               >
                 <QrCode className="w-4 h-4" />
-                <span>QR Code</span>
+                <span>QR</span>
               </button>
             </div>
           </div>
 
-          {/* QR Code Popup */}
+          {/* Optional QR Code View */}
           {showQr && (
-            <div className="mt-4 p-4 rounded-2xl bg-gray-50 border border-gray-200 flex flex-col items-center justify-center text-center animate-fadeIn">
+            <div className="mt-4 p-4 rounded-xl bg-white flex flex-col items-center justify-center text-center text-black animate-fadeIn">
               <img
                 src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(group.inviteLink)}`}
                 alt="Scan to join WhatsApp group"
-                className="w-36 h-36 mb-2 rounded-lg"
+                className="w-36 h-36 mb-2"
               />
-              <p className="text-xs font-bold text-gray-700">Scan with WhatsApp camera to join</p>
+              <p className="text-[11px] font-bold text-gray-700">Scan with WhatsApp camera to join</p>
             </div>
           )}
 
           {/* Safety Notice & Report */}
-          <div className="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
+          <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs text-gray-500">
             <span className="flex items-center gap-1">
               <ShieldCheck className="w-3.5 h-3.5 text-[#25D366]" />
               Safe community listing
@@ -196,10 +189,10 @@ export const GroupDetailModal: React.FC<GroupDetailModalProps> = ({
                 onClose();
                 onReport(group);
               }}
-              className="text-red-500 hover:text-red-600 flex items-center gap-1 cursor-pointer font-semibold"
+              className="text-red-400 hover:text-red-300 flex items-center gap-1 cursor-pointer font-medium"
             >
               <AlertCircle className="w-3 h-3" />
-              Report link
+              Report listing
             </button>
           </div>
 

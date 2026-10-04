@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
-import { ChevronLeft, ChevronRight, Layers } from 'lucide-react';
-import { useAdmin } from '../context/AdminContext.tsx';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { CATEGORIES_DATA } from '../data/groupsData.ts';
 
 interface CategoryTabsProps {
   selectedCategory: string;
@@ -16,9 +16,6 @@ export const CategoryTabs: React.FC<CategoryTabsProps> = ({
   onToggleAdult
 }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const { categories, appearance } = useAdmin();
-
-  const primaryColor = appearance?.primaryColor || '#25D366';
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollRef.current) {
@@ -27,15 +24,13 @@ export const CategoryTabs: React.FC<CategoryTabsProps> = ({
     }
   };
 
-  const activeCategories = categories.filter((c) => !c.isHidden);
-
   return (
-    <div className="relative border-b border-gray-200 pb-4 mb-8">
-      {/* Scroll controls */}
+    <div className="relative border-b border-[#2d2d2d] pb-4 mb-8">
+      {/* Scroll controls for desktop */}
       <button 
         onClick={() => scroll('left')}
         aria-label="Scroll categories left"
-        className="hidden md:flex absolute -left-3 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-white border border-gray-200 items-center justify-center text-gray-600 hover:text-black hover:border-gray-400 shadow-md cursor-pointer"
+        className="hidden md:flex absolute -left-3 top-1/2 -translate-y-1/2 z-10 w-7 h-7 rounded-full bg-[#1e1e1e] border border-white/20 items-center justify-center text-gray-300 hover:text-white hover:border-[#25D366] shadow-lg cursor-pointer"
       >
         <ChevronLeft className="w-4 h-4" />
       </button>
@@ -43,52 +38,55 @@ export const CategoryTabs: React.FC<CategoryTabsProps> = ({
       <button 
         onClick={() => scroll('right')}
         aria-label="Scroll categories right"
-        className="hidden md:flex absolute -right-3 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-white border border-gray-200 items-center justify-center text-gray-600 hover:text-black hover:border-gray-400 shadow-md cursor-pointer"
+        className="hidden md:flex absolute -right-3 top-1/2 -translate-y-1/2 z-10 w-7 h-7 rounded-full bg-[#1e1e1e] border border-white/20 items-center justify-center text-gray-300 hover:text-white hover:border-[#25D366] shadow-lg cursor-pointer"
       >
         <ChevronRight className="w-4 h-4" />
       </button>
 
       <div 
         ref={scrollRef}
-        className="flex items-center gap-2 overflow-x-auto no-scrollbar scroll-smooth px-1"
+        className="flex items-center gap-2.5 overflow-x-auto no-scrollbar scroll-smooth px-1"
       >
-        {/* "All Groups" / Latest Tab */}
+        {/* Adult 18+ Toggle */}
         <button
-          onClick={() => onSelectCategory('all')}
-          className={`flex-shrink-0 px-4 py-2 rounded-full text-xs sm:text-sm font-bold transition-all cursor-pointer ${
-            selectedCategory === 'all'
-              ? 'text-black shadow-sm'
-              : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
+          onClick={onToggleAdult}
+          className={`h-9 px-3 rounded-full border text-xs font-black tracking-wide flex items-center gap-1.5 flex-shrink-0 cursor-pointer transition-all ${
+            adultMode
+              ? 'border-red-500 bg-gradient-to-r from-red-600 to-rose-800 text-white shadow-lg shadow-red-600/30 animate-adult-pulse'
+              : 'border-white/15 bg-white/5 text-gray-300 hover:border-white/30 hover:text-white'
           }`}
-          style={{
-            backgroundColor: selectedCategory === 'all' ? primaryColor : undefined
-          }}
+          title={adultMode ? '18+ mode active (click to disable)' : 'Enable 18+ content mode'}
         >
-          All Categories
+          <span className="font-extrabold">18+</span>
+          <span className={`w-1.5 h-1.5 rounded-full ${adultMode ? 'bg-white' : 'bg-gray-500'}`} />
         </button>
 
-        {/* Dynamic Category Tabs from Admin State */}
-        {activeCategories.map((cat) => {
-          const isSelected = selectedCategory === cat.slug;
+        {/* "Latest Added" / All Tab */}
+        <button
+          onClick={() => onSelectCategory('all')}
+          className={`flex-shrink-0 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
+            selectedCategory === 'all'
+              ? 'bg-[#25D366] text-black font-bold shadow-md shadow-[#25D366]/20'
+              : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10'
+          }`}
+        >
+          Latest Added
+        </button>
 
-          return (
-            <button
-              key={cat.slug}
-              onClick={() => onSelectCategory(cat.slug)}
-              className={`flex-shrink-0 px-3.5 py-2 rounded-full text-xs sm:text-sm font-bold transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
-                isSelected
-                  ? 'text-black shadow-sm'
-                  : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
-              }`}
-              style={{
-                backgroundColor: isSelected ? primaryColor : undefined
-              }}
-            >
-              <span>{cat.icon}</span>
-              <span>{cat.name}</span>
-            </button>
-          );
-        })}
+        {/* Category tabs */}
+        {CATEGORIES_DATA.map((cat) => (
+          <button
+            key={cat.slug}
+            onClick={() => onSelectCategory(cat.slug)}
+            className={`flex-shrink-0 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all cursor-pointer whitespace-nowrap ${
+              selectedCategory === cat.slug
+                ? 'bg-[#25D366] text-black font-bold shadow-md shadow-[#25D366]/20'
+                : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10'
+            }`}
+          >
+            <span>{cat.name}</span>
+          </button>
+        ))}
       </div>
     </div>
   );

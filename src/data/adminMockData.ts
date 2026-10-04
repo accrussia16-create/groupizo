@@ -519,21 +519,18 @@ export const INITIAL_CMS_PAGES: CmsPage[] = [
 export const INITIAL_APPEARANCE: AdminAppearance = {
   theme: 'dark',
   primaryColor: '#25D366',
-  siteName: 'GroupHub',
-  logoText: 'GroupHub Directory',
+  siteName: 'Groupizo.',
+  logoText: 'Groupizo Directory',
   fontFamily: 'Plus Jakarta Sans',
-  borderRadius: 'rounded-2xl',
-  showJoinCounter: true,
-  heroHeading: 'Find WhatsApp Groups That Match Your Interests',
-  heroSubheading: 'Discover public WhatsApp communities by topic, category, country and city.',
-  heroSearchPlaceholder: 'Search groups, topics, cities or countries...'
+  borderRadius: 'rounded-xl',
+  showJoinCounter: true
 };
 
 export const INITIAL_SYSTEM_SETTINGS: SystemSettingsConfig = {
-  siteName: 'GroupHub',
-  siteUrl: 'https://grouphub.community',
-  adminEmail: 'admin@grouphub.community',
-  contactEmail: 'hello@grouphub.community',
+  siteName: 'Groupizo',
+  siteUrl: 'https://groupizo.com',
+  adminEmail: 'admin@groupizo.com',
+  contactEmail: 'hello@groupizo.com',
   timezone: 'UTC-0',
   language: 'English (US)',
   groupsPerPage: 24,

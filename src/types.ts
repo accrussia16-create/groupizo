@@ -13,8 +13,6 @@ export interface Group {
   maxMembers?: number;
   isAdult?: boolean;
   isVerified?: boolean;
-  isFeatured?: boolean;
-  isPinned?: boolean;
   tags: string[];
   description?: string;
   addedAgo?: string;

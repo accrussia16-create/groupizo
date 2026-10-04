@@ -13,17 +13,11 @@ import {
 } from 'lucide-react';
 
 export const HomepageControl: React.FC = () => {
-  const { homepageConfig, setHomepageConfig, toggleSectionEnabled, appearance, updateAppearance, showToast } = useAdmin();
+  const { homepageConfig, setHomepageConfig, toggleSectionEnabled, showToast } = useAdmin();
 
-  const [heroHeading, setHeroHeading] = useState(
-    appearance?.heroHeading || 'Find WhatsApp Groups That Match Your Interests'
-  );
-  const [heroSub, setHeroSub] = useState(
-    appearance?.heroSubheading || 'Discover public WhatsApp communities by topic, category, country and city.'
-  );
-  const [searchPlaceholder, setSearchPlaceholder] = useState(
-    appearance?.heroSearchPlaceholder || 'Search groups, topics, cities or countries...'
-  );
+  const [heroHeading, setHeroHeading] = useState('Find Wa groups that actually work.');
+  const [heroSub, setHeroSub] = useState('We check each group link before adding it here. If a link stops working, we catch it and update the listing.');
+  const [searchPlaceholder, setSearchPlaceholder] = useState('Try: fitness Lagos, crypto India, gaming, study...');
 
   const moveSection = (index: number, direction: 'up' | 'down') => {
     const newItems = [...homepageConfig];
@@ -40,11 +34,6 @@ export const HomepageControl: React.FC = () => {
 
   const handleSaveText = (e: React.FormEvent) => {
     e.preventDefault();
-    updateAppearance({
-      heroHeading: heroHeading.trim(),
-      heroSubheading: heroSub.trim(),
-      heroSearchPlaceholder: searchPlaceholder.trim()
-    });
     showToast('Homepage hero text and search parameters updated.');
   };
 

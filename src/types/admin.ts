@@ -205,9 +205,6 @@ export interface AdminAppearance {
   fontFamily: string;
   borderRadius: 'rounded-md' | 'rounded-xl' | 'rounded-2xl' | 'rounded-3xl';
   showJoinCounter: boolean;
-  heroHeading?: string;
-  heroSubheading?: string;
-  heroSearchPlaceholder?: string;
 }
 
 export interface SystemSettingsConfig {

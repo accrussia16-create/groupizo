@@ -1,6 +1,6 @@
 import React from 'react';
-import { useAdmin } from '../context/AdminContext.tsx';
-import { MapPin, Globe2, FolderTree, ArrowRight } from 'lucide-react';
+import { CATEGORIES_DATA, COUNTRIES_DATA, CITIES_DATA } from '../data/groupsData.ts';
+import { ArrowRight, MapPin } from 'lucide-react';
 
 interface BrowseSectionsProps {
   onSelectCategory: (slug: string) => void;
@@ -13,41 +13,34 @@ export const BrowseSections: React.FC<BrowseSectionsProps> = ({
   onSelectCountry,
   onSelectCity
 }) => {
-  const { categories, countries, cities } = useAdmin();
-
   return (
-    <div className="space-y-16 my-16">
+    <div className="space-y-20 my-16">
       
       {/* ── BROWSE BY CATEGORY ── */}
-      <section id="browse-categories" className="scroll-mt-24">
+      <section id="browse-categories" className="scroll-mt-20">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-[#128C7E] font-bold text-xs uppercase tracking-wider mb-2">
-            <FolderTree className="w-3.5 h-3.5" /> Topics &amp; Interests
-          </div>
-          <h2 className="text-2xl sm:text-3xl font-black text-gray-950">
-            Browse Groups by Category
-          </h2>
-          <p className="text-xs sm:text-sm text-gray-500 max-w-md mx-auto mt-1">
-            Pick a topic and discover targeted WhatsApp groups curated for that interest.
+          <h2 className="text-2xl sm:text-3xl font-black text-white mb-2">Browse by category</h2>
+          <p className="text-xs sm:text-sm text-gray-400 max-w-md mx-auto">
+            Pick a topic and see all verified groups listed under it.
           </p>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-3 sm:gap-4">
-          {categories.filter((c) => !c.isHidden).map((cat) => (
+          {CATEGORIES_DATA.map((cat) => (
             <button
-              key={cat.id}
+              key={cat.slug}
               onClick={() => onSelectCategory(cat.slug)}
-              className="group bg-white hover:bg-emerald-50/50 border border-gray-200 hover:border-[#25D366] rounded-2xl p-4 flex items-center gap-3 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md text-left cursor-pointer"
+              className="group bg-[#1e1e1e] hover:bg-[#252525] border border-[#2d2d2d] hover:border-[#25D366] rounded-xl p-3.5 sm:p-4 flex items-center gap-3 transition-all duration-200 hover:-translate-y-0.5 text-left cursor-pointer"
             >
-              <div className="text-2xl w-11 h-11 rounded-xl bg-gray-100 group-hover:bg-[#25D366]/20 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-all">
-                {cat.icon || '📁'}
+              <div className="text-2xl w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                {cat.icon || '📂'}
               </div>
               <div className="min-w-0 flex-1">
-                <div className="text-sm font-extrabold text-gray-900 group-hover:text-[#128C7E] truncate transition-colors">
+                <div className="text-xs sm:text-sm font-bold text-white group-hover:text-[#25D366] truncate transition-colors">
                   {cat.name}
                 </div>
-                <div className="text-xs text-gray-500 mt-0.5">
-                  {cat.groupsCount} groups
+                <div className="text-[11px] text-gray-400">
+                  {cat.count} groups
                 </div>
               </div>
             </button>
@@ -56,32 +49,27 @@ export const BrowseSections: React.FC<BrowseSectionsProps> = ({
       </section>
 
       {/* ── BROWSE BY COUNTRY ── */}
-      <section id="browse-countries" className="scroll-mt-24">
+      <section id="browse-countries" className="scroll-mt-20">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-[#128C7E] font-bold text-xs uppercase tracking-wider mb-2">
-            <Globe2 className="w-3.5 h-3.5" /> Worldwide Reach
-          </div>
-          <h2 className="text-2xl sm:text-3xl font-black text-gray-950">
-            Browse Groups by Country
-          </h2>
-          <p className="text-xs sm:text-sm text-gray-500 max-w-md mx-auto mt-1">
-            Find active groups from your homeland or join international global chats.
+          <h2 className="text-2xl sm:text-3xl font-black text-white mb-2">Browse by country</h2>
+          <p className="text-xs sm:text-sm text-gray-400 max-w-md mx-auto">
+            Find groups from your country or explore international communities worldwide.
           </p>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-3 sm:gap-4">
-          {countries.filter((c) => !c.isHidden).map((ctry) => {
+          {COUNTRIES_DATA.map((ctry) => {
             const flagUrl = ctry.code !== 'global'
               ? `https://flagcdn.com/w40/${ctry.code.toLowerCase()}.png`
               : null;
 
             return (
               <button
-                key={ctry.id}
+                key={ctry.slug}
                 onClick={() => onSelectCountry(ctry.name)}
-                className="group bg-white hover:bg-emerald-50/50 border border-gray-200 hover:border-[#25D366] rounded-2xl p-4 flex items-center gap-3 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md text-left cursor-pointer"
+                className="group bg-[#1e1e1e] hover:bg-[#252525] border border-[#2d2d2d] hover:border-[#25D366] rounded-xl p-3.5 sm:p-4 flex items-center gap-3 transition-all duration-200 hover:-translate-y-0.5 text-left cursor-pointer"
               >
-                <div className="w-9 h-6.5 rounded overflow-hidden flex items-center justify-center flex-shrink-0 border border-black/10 shadow-xs bg-gray-100">
+                <div className="w-8 h-6 rounded flex items-center justify-center overflow-hidden flex-shrink-0 border border-black/40 shadow-sm">
                   {flagUrl ? (
                     <img 
                       src={flagUrl} 
@@ -94,11 +82,11 @@ export const BrowseSections: React.FC<BrowseSectionsProps> = ({
                   )}
                 </div>
                 <div className="min-w-0 flex-1">
-                  <div className="text-sm font-extrabold text-gray-900 group-hover:text-[#128C7E] truncate transition-colors">
+                  <div className="text-xs sm:text-sm font-bold text-white group-hover:text-[#25D366] truncate transition-colors">
                     {ctry.name}
                   </div>
-                  <div className="text-xs text-gray-500 mt-0.5">
-                    {ctry.groupsCount} groups
+                  <div className="text-[11px] text-gray-400">
+                    {ctry.count} groups
                   </div>
                 </div>
               </button>
@@ -107,35 +95,30 @@ export const BrowseSections: React.FC<BrowseSectionsProps> = ({
         </div>
       </section>
 
-      {/* ── LOCAL METROPOLITAN CITIES ── */}
-      <section id="browse-cities" className="scroll-mt-24">
+      {/* ── LOCAL COMMUNITIES (CITIES) ── */}
+      <section id="browse-cities" className="scroll-mt-20">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-[#128C7E] font-bold text-xs uppercase tracking-wider mb-2">
-            <MapPin className="w-3.5 h-3.5" /> Local Networks
-          </div>
-          <h2 className="text-2xl sm:text-3xl font-black text-gray-950">
-            Regional City Communities
-          </h2>
-          <p className="text-xs sm:text-sm text-gray-500 max-w-md mx-auto mt-1">
-            Connect with people in your local metropolitan city, district or university hub.
+          <h2 className="text-2xl sm:text-3xl font-black text-white mb-2">Local communities</h2>
+          <p className="text-xs sm:text-sm text-gray-400 max-w-md mx-auto">
+            Groups tied to specific metropolitan cities and regions.
           </p>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-          {cities.filter((c) => !c.isHidden).map((city) => (
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5 sm:gap-3">
+          {CITIES_DATA.map((city) => (
             <button
-              key={city.id}
+              key={city.slug}
               onClick={() => onSelectCity(city.name)}
-              className="bg-white hover:bg-emerald-50/60 border border-gray-200 hover:border-[#25D366] rounded-2xl px-4 py-3 flex items-center justify-between gap-2 transition-all cursor-pointer text-left group shadow-2xs hover:shadow-sm"
+              className="bg-[#1e1e1e] hover:bg-[#25D366]/5 border border-[#2d2d2d] hover:border-[#25D366] rounded-xl px-3.5 py-2.5 flex items-center justify-between gap-2 transition-colors cursor-pointer text-left group"
             >
               <div className="flex items-center gap-2 min-w-0">
-                <MapPin className="w-4 h-4 text-[#128C7E] flex-shrink-0" />
-                <span className="text-sm font-bold text-gray-900 group-hover:text-[#128C7E] truncate">
+                <MapPin className="w-3.5 h-3.5 text-[#25D366] flex-shrink-0" />
+                <span className="text-xs sm:text-sm font-medium text-gray-200 group-hover:text-white truncate">
                   {city.name}
                 </span>
               </div>
-              <span className="bg-emerald-100 text-[#128C7E] text-[11px] font-black px-2 py-0.5 rounded-full flex-shrink-0">
-                {city.groupsCount}
+              <span className="bg-[#25D366]/15 text-[#25D366] text-[11px] font-bold px-2 py-0.5 rounded-full flex-shrink-0">
+                {city.count}
               </span>
             </button>
           ))}

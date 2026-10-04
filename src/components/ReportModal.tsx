@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Group } from '../types.ts';
-import { useAdmin } from '../context/AdminContext.tsx';
 import { X, CheckCircle, AlertTriangle } from 'lucide-react';
 
 interface ReportModalProps {
@@ -14,8 +13,7 @@ export const ReportModal: React.FC<ReportModalProps> = ({
   onClose,
   targetGroup
 }) => {
-  const { addReport } = useAdmin();
-  const [reason, setReason] = useState('Broken Link');
+  const [reason, setReason] = useState('broken-link');
   const [details, setDetails] = useState('');
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
@@ -24,16 +22,6 @@ export const ReportModal: React.FC<ReportModalProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    addReport({
-      groupId: targetGroup?.id || 'general',
-      groupTitle: targetGroup?.title || 'Community Issue',
-      groupInviteLink: targetGroup?.inviteLink || '',
-      reason: (reason as any) || 'Broken Link',
-      details: details.trim() || 'Report submitted by directory visitor.',
-      reportedByEmail: email.trim() || 'anonymous@visitor.com'
-    });
-
     setSubmitted(true);
     setTimeout(() => {
       setSubmitted(false);

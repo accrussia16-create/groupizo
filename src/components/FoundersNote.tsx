@@ -1,105 +1,70 @@
 import React from 'react';
-import { Search, ShieldCheck, CheckCircle2, MessageSquare, Plus } from 'lucide-react';
-import { useAdmin } from '../context/AdminContext.tsx';
+import { Search, Bot, CheckCircle } from 'lucide-react';
 
-interface FoundersNoteProps {
-  onOpenAddGroup?: () => void;
-}
-
-export const FoundersNote: React.FC<FoundersNoteProps> = ({ onOpenAddGroup }) => {
-  const { appearance } = useAdmin();
-  const brandName = appearance?.siteName || 'GroupHub';
-  const primaryColor = appearance?.primaryColor || '#25D366';
-
+export const FoundersNote: React.FC = () => {
   return (
     <div className="space-y-16 my-16">
       
-      {/* ── HOW IT WORKS (3 STEPS) ── */}
-      <section id="how-it-works" className="scroll-mt-24">
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-[#128C7E] font-bold text-xs uppercase tracking-wider mb-2">
-            <CheckCircle2 className="w-3.5 h-3.5" /> 3 Simple Steps
+      {/* ── THE ORIGIN (FOUNDER'S NOTE) ── */}
+      <section className="bg-gradient-to-r from-[#19241b]/60 to-[#121212] border-l-4 border-[#25D366] rounded-r-2xl p-6 sm:p-8">
+        <h2 className="text-xl sm:text-2xl font-black text-white mb-3">The Origin</h2>
+        <p className="text-sm sm:text-base text-gray-200 leading-relaxed italic mb-6">
+          &ldquo;I got tired of clicking WhatsApp invite links that led nowhere — dead pages, expired invites, groups at full capacity. The directories I found weren&apos;t maintaining their listings, so I started building Groupizo as a side project in early 2026. The idea is straightforward: every group gets reviewed before it goes live. After that, our system monitors invite status and updates listings when changes are detected. If a link stops working, the listing is flagged. We only look at what the admin provides — name, image, description. We do not enter groups or read any messages.&rdquo;
+        </p>
+        <div className="flex items-center gap-3.5">
+          <div className="w-11 h-11 rounded-full bg-[#25D366]/20 border border-[#25D366]/40 flex items-center justify-center text-xl flex-shrink-0">
+            🧑‍💻
           </div>
-          <h2 className="text-2xl sm:text-3xl font-black text-gray-950">
-            How {brandName} Works
-          </h2>
-          <p className="text-xs sm:text-sm text-gray-500 max-w-lg mx-auto mt-1">
-            Discovering and joining genuine WhatsApp communities has never been simpler.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          
-          <div className="bg-white border border-gray-200/90 rounded-2xl p-6 shadow-xs hover:shadow-md hover:border-[#25D366] transition-all">
-            <div 
-              className="w-12 h-12 rounded-2xl flex items-center justify-center font-black text-black text-lg mb-4 shadow-sm"
-              style={{ backgroundColor: `${primaryColor}25`, color: '#0d603a' }}
-            >
-              1
+          <div>
+            <div className="font-extrabold text-white text-sm sm:text-base">Elijah, Founder</div>
+            <div className="text-xs text-gray-400">
+              Building Groupizo since 2026 &middot; Listings reviewed before publishing
             </div>
-            <h3 className="text-gray-900 font-extrabold text-base mb-2">Explore By Your Interests</h3>
-            <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
-              Search by keywords, select your favorite genre (gaming, education, business, tech), or filter by country and regional city.
-            </p>
           </div>
-
-          <div className="bg-white border border-gray-200/90 rounded-2xl p-6 shadow-xs hover:shadow-md hover:border-[#25D366] transition-all">
-            <div 
-              className="w-12 h-12 rounded-2xl flex items-center justify-center font-black text-black text-lg mb-4 shadow-sm"
-              style={{ backgroundColor: `${primaryColor}25`, color: '#0d603a' }}
-            >
-              2
-            </div>
-            <h3 className="text-gray-900 font-extrabold text-base mb-2">Check Link &amp; Safety Rating</h3>
-            <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
-              Every invite link is verified for health status. View group capacity, topic tags, and review moderator checks before entering.
-            </p>
-          </div>
-
-          <div className="bg-white border border-gray-200/90 rounded-2xl p-6 shadow-xs hover:shadow-md hover:border-[#25D366] transition-all">
-            <div 
-              className="w-12 h-12 rounded-2xl flex items-center justify-center font-black text-black text-lg mb-4 shadow-sm"
-              style={{ backgroundColor: `${primaryColor}25`, color: '#0d603a' }}
-            >
-              3
-            </div>
-            <h3 className="text-gray-900 font-extrabold text-base mb-2">Join Instantly on WhatsApp</h3>
-            <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
-              Click &ldquo;Join Group&rdquo; and WhatsApp opens directly on your phone or desktop to the official invite screen. No registration needed.
-            </p>
-          </div>
-
         </div>
       </section>
 
-      {/* ── CALL TO ACTION BANNER (Dark Green Accent Section) ── */}
-      <section className="bg-gradient-to-r from-[#0b2114] via-[#0e2a1b] to-[#08180e] rounded-3xl p-8 sm:p-12 text-white shadow-xl relative overflow-hidden">
-        <div 
-          aria-hidden="true" 
-          className="pointer-events-none absolute -right-20 -bottom-20 w-80 h-80 rounded-full bg-[radial-gradient(circle,rgba(37,211,102,0.15)_0%,transparent_70%)]" 
-        />
+      {/* ── HOW IT WORKS ── */}
+      <section className="scroll-mt-20">
+        <div className="text-center mb-10">
+          <h2 className="text-2xl sm:text-3xl font-black text-white mb-2">How Groupizo works</h2>
+          <p className="text-xs sm:text-sm text-gray-400 max-w-lg mx-auto">
+            Here&apos;s how a group gets from someone&apos;s phone to this page and stays here only if the link keeps working.
+          </p>
+        </div>
 
-        <div className="relative z-10 max-w-2xl">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-emerald-300 font-bold text-xs uppercase tracking-wider mb-4 border border-white/10">
-            <MessageSquare className="w-3.5 h-3.5" /> Community Admins
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          
+          <div className="bg-[#1e1e1e] border border-[#2d2d2d] rounded-2xl p-6 hover:border-[#25D366]/40 transition-colors">
+            <div className="w-12 h-12 rounded-xl bg-[#25D366]/10 text-[#25D366] flex items-center justify-center mb-4">
+              <Search className="w-6 h-6 stroke-[2.5]" />
+            </div>
+            <h3 className="text-white font-extrabold text-base mb-2">1. Someone submits their group</h3>
+            <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
+              They paste their WhatsApp invite link, pick a category and country, and add a short description. It enters our validation verification queue.
+            </p>
           </div>
 
-          <h2 className="text-2xl sm:text-4xl font-black tracking-tight mb-3">
-            Do You Manage an Active WhatsApp Group?
-          </h2>
+          <div className="bg-[#1e1e1e] border border-[#2d2d2d] rounded-2xl p-6 hover:border-[#25D366]/40 transition-colors">
+            <div className="w-12 h-12 rounded-xl bg-[#25D366]/10 text-[#25D366] flex items-center justify-center mb-4">
+              <Bot className="w-6 h-6 stroke-[2.5]" />
+            </div>
+            <h3 className="text-white font-extrabold text-base mb-2">2. We check it and publish</h3>
+            <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
+              The link is checked for validity, ensuring the title and category fit. After publishing, our background checker verifies that links stay active without expiring.
+            </p>
+          </div>
 
-          <p className="text-emerald-100/80 text-sm sm:text-base leading-relaxed mb-6">
-            Get your community discovered by enthusiastic new members. Submit your invite link to our verified directory for free.
-          </p>
+          <div className="bg-[#1e1e1e] border border-[#2d2d2d] rounded-2xl p-6 hover:border-[#25D366]/40 transition-colors">
+            <div className="w-12 h-12 rounded-xl bg-[#25D366]/10 text-[#25D366] flex items-center justify-center mb-4">
+              <CheckCircle className="w-6 h-6 stroke-[2.5]" />
+            </div>
+            <h3 className="text-white font-extrabold text-base mb-2">3. You find and join</h3>
+            <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
+              Search by topic, city, or country. Tap a group card, click &ldquo;Join Group&rdquo;, and WhatsApp opens straight to the join preview screen. No sign-up required.
+            </p>
+          </div>
 
-          <button
-            onClick={onOpenAddGroup}
-            className="inline-flex items-center gap-2 text-black font-black text-sm px-6 py-3.5 rounded-full shadow-lg transition-transform hover:scale-105 cursor-pointer"
-            style={{ backgroundColor: primaryColor }}
-          >
-            <Plus className="w-4 h-4 stroke-[3]" />
-            <span>Submit Your Group (100% Free)</span>
-          </button>
         </div>
       </section>
 

@@ -63,7 +63,6 @@ interface AdminContextType {
 
   // Submissions
   submissions: Submission[];
-  addSubmission: (sub: Partial<Submission>) => void;
   approveSubmission: (id: string) => void;
   rejectSubmission: (id: string, reason: string) => void;
   deleteSubmission: (id: string) => void;
@@ -95,7 +94,6 @@ interface AdminContextType {
 
   // Reports
   reports: GroupReport[];
-  addReport: (report: Partial<GroupReport>) => void;
   updateReportStatus: (id: string, status: GroupReport['status'], internalNotes?: string) => void;
   deleteReport: (id: string) => void;
 
@@ -436,40 +434,6 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   };
 
   // Submissions
-  const addSubmission = (subData: Partial<Submission>) => {
-    const newSub: Submission = {
-      id: `sub-${Date.now()}`,
-      groupName: subData.groupName || 'New Community',
-      inviteLink: subData.inviteLink || '',
-      submitterName: subData.submitterName || 'Community Member',
-      submitterEmail: subData.submitterEmail || 'visitor@grouphub.com',
-      submitterIp: '192.168.1.1',
-      category: subData.category || 'General',
-      categorySlug: subData.categorySlug || 'general',
-      country: subData.country || 'Global',
-      countryCode: subData.countryCode || 'global',
-      city: subData.city,
-      submittedDate: new Date().toISOString().substring(0, 10),
-      status: subData.status || 'Pending',
-      description: subData.description,
-      tags: subData.tags || ['Community']
-    };
-
-    setSubmissions((prev) => [newSub, ...prev]);
-    addAuditLog('New Group Submission Received', newSub.groupName);
-
-    const newNotif: NotificationItem = {
-      id: `notif-${Date.now()}`,
-      title: 'New Group Submission',
-      message: `"${newSub.groupName}" was submitted for admin review.`,
-      type: 'submission',
-      timestamp: 'Just now',
-      read: false
-    };
-    setNotifications((prev) => [newNotif, ...prev]);
-    showToast(`"${newSub.groupName}" submitted for review.`);
-  };
-
   const approveSubmission = (subId: string) => {
     const sub = submissions.find((s) => s.id === subId);
     if (!sub) return;
@@ -649,47 +613,6 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   };
 
   // Reports
-  const addReport = (reportData: Partial<GroupReport>) => {
-    const newReport: GroupReport = {
-      id: `rep-${Date.now()}`,
-      groupId: reportData.groupId || 'general',
-      groupTitle: reportData.groupTitle || 'General Group',
-      groupInviteLink: reportData.groupInviteLink || '',
-      reason: reportData.reason || 'Broken Link',
-      reportedByEmail: reportData.reportedByEmail || 'visitor@grouphub.com',
-      reportedIp: '192.168.1.1',
-      details: reportData.details || 'Issue reported from public directory.',
-      date: new Date().toISOString().substring(0, 10),
-      status: 'Pending'
-    };
-
-    setReports((prev) => [newReport, ...prev]);
-
-    // If groupId matches, increment report count on the group
-    if (newReport.groupId && newReport.groupId !== 'general') {
-      setGroups((prev) =>
-        prev.map((g) =>
-          g.id === newReport.groupId
-            ? { ...g, reportsCount: (g.reportsCount || 0) + 1, status: (g.reportsCount || 0) >= 2 ? 'reported' : g.status }
-            : g
-        )
-      );
-    }
-
-    addAuditLog('Group Reported', `${newReport.groupTitle} (${newReport.reason})`);
-
-    const newNotif: NotificationItem = {
-      id: `notif-${Date.now()}`,
-      title: 'Group Reported',
-      message: `"${newReport.groupTitle}" was reported: ${newReport.reason}`,
-      type: 'report',
-      timestamp: 'Just now',
-      read: false
-    };
-    setNotifications((prev) => [newNotif, ...prev]);
-    showToast('Report submitted for admin review.');
-  };
-
   const updateReportStatus = (id: string, status: GroupReport['status'], internalNotes?: string) => {
     setReports((prev) =>
       prev.map((r) => (r.id === id ? { ...r, status, internalNotes: internalNotes || r.internalNotes } : r))
@@ -785,7 +708,6 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         togglePinGroup,
         toggleVerifyGroup,
         submissions,
-        addSubmission,
         approveSubmission,
         rejectSubmission,
         deleteSubmission,
@@ -808,7 +730,6 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         addTag,
         deleteTag,
         reports,
-        addReport,
         updateReportStatus,
         deleteReport,
         users,

@@ -1,6 +1,6 @@
 {
-  "name": "GroupHub - WhatsApp Group Directory",
-  "description": "Discover active public WhatsApp groups by category, country, city, topic, and keyword on GroupHub. Browse verified community listings.",
+  "name": "Groupizo - WhatsApp Group Links Directory",
+  "description": "Browse 1,790+ reviewed WhatsApp group links across 31+ categories, 52+ countries, and 54+ cities with real-time verification and community submissions.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
